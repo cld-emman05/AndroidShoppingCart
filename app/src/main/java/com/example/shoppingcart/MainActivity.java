@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick(View v) {
                                         intent = new Intent(MainActivity.this, ShoppingActivity.class);
+                                        startActivity(intent);
                                     }
                                 }
         );
