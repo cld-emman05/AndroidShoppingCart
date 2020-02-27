@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -55,6 +56,16 @@ public class ShoppingActivity extends AppCompatActivity {
         totalPrice = (TextView) findViewById(R.id.total_price);
 
         selectItem();
+
+        checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShoppingActivity.this, Transaction.class);
+                intent.putExtra("LATEST_ORDER", buy);
+                intent.putExtra("TOTAL_AMOUNT", totalPrice);
+                startActivity(intent);
+            }
+        });
     }
 
     public void addCart(int pos){
@@ -104,7 +115,7 @@ public class ShoppingActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 final int pos = (int) id;
-                Toast.makeText(ShoppingActivity.this, ""+item.get(pos).getPrice(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(ShoppingActivity.this, "This " +item.get(pos).getName() + " costs " +item.get(pos).getPrice(),Toast.LENGTH_SHORT).show();
 
                 add_cart.setOnClickListener(new View.OnClickListener() {
                     @Override
