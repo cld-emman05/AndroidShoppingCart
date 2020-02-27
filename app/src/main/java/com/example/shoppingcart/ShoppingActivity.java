@@ -3,10 +3,14 @@ package com.example.shoppingcart;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,15 +18,16 @@ import android.widget.Toast;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class ShoppingActivity<EditView> extends AppCompatActivity {
+public class ShoppingActivity extends AppCompatActivity {
 
     Spinner stock;
     ArrayList<Items> item = new ArrayList<Items>();
     ArrayList<Items> buy = new ArrayList<Items>();
 
     Button add_cart, checkout;
-    TextView oddItem, evenItem, oddPrice, evenPrice, totalPrice;
-    EditView quantity;
+    TextView oddItem, evenItem, oddPrice, evenPrice, oddQuan, evenQuan, totalPrice;
+    EditText quantity;
+    LinearLayout evenQueue, oddQueue, itemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +36,18 @@ public class ShoppingActivity<EditView> extends AppCompatActivity {
 
         add_cart = (Button) findViewById(R.id.addbtn);
         checkout = (Button) findViewById(R.id.checkbtn);
-        quantity = (EditView) findViewById(R.id.qty);
+        quantity = (EditText) findViewById(R.id.qty);
 
         oddItem = (TextView) findViewById(R.id.odd_item_name);
         oddPrice = (TextView) findViewById(R.id.odd_item_price);
+        oddQuan = (TextView) findViewById(R.id.odd_item_qty);
+        oddQueue = (LinearLayout) findViewById(R.id.odd_queue);
+
         evenItem = (TextView) findViewById(R.id.even_item_name);
         evenPrice = (TextView) findViewById(R.id.even_item_price);
+        evenQuan = (TextView) findViewById(R.id.even_item_qty);
+        evenQueue = (LinearLayout) findViewById(R.id.even_queue);
+
         totalPrice = (TextView) findViewById(R.id.total_price);
 
         selectItem();
@@ -71,26 +82,43 @@ public class ShoppingActivity<EditView> extends AppCompatActivity {
                 add_cart.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        LinearLayout odd, even;
+
                         String itemName;
                         double itemPrice = 0, total = 0;
                         buy.add(new Items(item.get(pos).getName(), item.get(pos).getPrice()));
 
-                        String pref_quan = quantity.toString();
+                        for(int i=0; i < buy.size(); i++){
+                            String pref_quan = quantity.getText().toString();
 
-                        int count = Integer.getInteger(pref_quan);
+                            if(pref_quan.isEmpty())
+                                pref_quan = "0";
 
-                        for(int i=0; i<buy.size(); i++){
+                            int count = Integer.parseInt(pref_quan);
+
                             itemName = buy.get(i).getName();
-                            itemPrice = buy.get(i).getPrice();
+                            itemPrice = buy.get(i).getPrice()*count;
 
                             if(i % 2 == 0){
+                                evenQuan.setText(pref_quan);
                                 evenItem.setText(itemName);
                                 evenPrice.setText(""+itemPrice);
+
+                                evenQueue = new LinearLayout(ShoppingActivity.this);
+
+                                //evenQueue.addView(evenQuan);
+                                //evenQueue.addView(evenItem);
+                                //evenQueue.addView(evenPrice);
                             }
 
                             else{
+                                oddQuan.setText(pref_quan);
                                 oddItem.setText(itemName);
                                 oddPrice.setText(""+itemPrice);
+
+                                //oddQueue.addView(oddQuan);
+                                //oddQueue.addView(oddItem);
+                                //oddQueue.addView(oddPrice);
                             }
 
                             total += itemPrice;

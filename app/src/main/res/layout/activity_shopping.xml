@@ -57,6 +57,7 @@
         >
 
     <LinearLayout
+        android:id="@+id/item_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -82,18 +83,14 @@
                 android:layout_height="match_parent"
                 android:text="0"
                 android:textSize="24dp"
-
-
-
                 style="bold"/>
 
             <TextView
                 android:id="@+id/even_item_name"
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
-                android:textSize="16dp"
                 android:text="Name of Item"
-                />
+                android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/even_item_price"
