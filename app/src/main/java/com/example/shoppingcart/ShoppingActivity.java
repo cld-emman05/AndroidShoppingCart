@@ -26,11 +26,12 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShoppingActivity extends AppCompatActivity {
+public class ShoppingActivity extends AppCompatActivity implements Serializable {
 
     Spinner stock;
     ArrayList<Items> item = new ArrayList<Items>();
@@ -61,9 +62,10 @@ public class ShoppingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ShoppingActivity.this, Transaction.class);
-                intent.putExtra("LATEST_ORDER", buy);
-                intent.putExtra("TOTAL_AMOUNT", totalPrice);
+
                 startActivity(intent);
+                intent.putExtra("ORDERS", buy);
+                intent.putExtra("TOTAL", totalPrice.toString());
             }
         });
     }
@@ -82,8 +84,10 @@ public class ShoppingActivity extends AppCompatActivity {
         for(int i = 0; i < buy.size(); i++)
             itemPrice += buy.get(i).item.price * buy.get(i).quantity;
 
-            total = itemPrice;
-            totalPrice.setText(""+total);
+        total = itemPrice;
+
+        getIntent().putExtra("TOTAL", total);
+        totalPrice.setText(""+total);
 
         itemList = (RecyclerView) findViewById(R.id.item_list);
         itemList.setLayoutManager(new LinearLayoutManager(this));

@@ -19,8 +19,16 @@
         />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/order_sum"
         android:layout_width="match_parent"
         android:layout_height="500dp"/>
+
+    <TextView
+        android:id="@+id/totalview"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="Total:" />
 
     <EditText
         android:id="@+id/payment"
