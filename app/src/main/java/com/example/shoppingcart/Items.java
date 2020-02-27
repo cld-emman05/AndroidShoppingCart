@@ -1,6 +1,8 @@
 package com.example.shoppingcart;
 
-public class Items{
+import java.io.Serializable;
+
+public class Items implements Serializable {
     protected String name;
     protected double price;
 

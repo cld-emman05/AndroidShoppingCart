@@ -61,11 +61,7 @@ public class ShoppingActivity extends AppCompatActivity implements Serializable 
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ShoppingActivity.this, Transaction.class);
-
-                startActivity(intent);
-                intent.putExtra("ORDERS", buy);
-                intent.putExtra("TOTAL", totalPrice.toString());
+                checkOut(buy);
             }
         });
     }
@@ -134,5 +130,17 @@ public class ShoppingActivity extends AppCompatActivity implements Serializable 
                 Toast.makeText(ShoppingActivity.this, "Empty",Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void checkOut(ArrayList<Order> order){
+        Intent intent = new Intent(ShoppingActivity.this, Transaction.class);
+
+        intent.putExtra("ORDERS", order);
+        intent.putExtra("TOTAL", totalPrice.getText().toString());
+
+        if(order.isEmpty())
+            Toast.makeText(ShoppingActivity.this, "No orders are being made",Toast.LENGTH_LONG).show();
+        else
+            startActivity(intent);
     }
 }

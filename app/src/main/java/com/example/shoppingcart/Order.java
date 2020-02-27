@@ -1,8 +1,9 @@
 package com.example.shoppingcart;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Order{
+public class Order implements Serializable {
     protected Items item;
     protected int quantity;
     private double total;
