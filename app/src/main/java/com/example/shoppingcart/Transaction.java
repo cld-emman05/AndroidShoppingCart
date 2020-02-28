@@ -49,6 +49,7 @@ public class Transaction extends AppCompatActivity implements Serializable {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Transaction.this, ShoppingActivity.class);
+
                 startActivity(intent);
             }
         });
@@ -62,19 +63,30 @@ public class Transaction extends AppCompatActivity implements Serializable {
                 total_raw = totalView.getText().toString();
                 pay_raw = payment.getText().toString();
 
-                total_price = Double.parseDouble(total_raw);
-                pay_price = Double.parseDouble(pay_raw);
-
-                change = pay_price - total_price;
-
-                if(change < 0){
-                    Toast.makeText(Transaction.this, "Insufficient payment",Toast.LENGTH_LONG).show();
+                if(pay_raw.isEmpty()){
+                    Toast.makeText(Transaction.this, "Enter an amount",Toast.LENGTH_LONG).show();
                 }
 
                 else{
-                    intent = new Intent(Transaction.this, FinalizeActivity.class);
+                    total_price = Double.parseDouble(total_raw);
+                    pay_price = Double.parseDouble(pay_raw);
 
-                    startActivity(intent);
+                    change = pay_price - total_price;
+
+
+                    if (change < 0)
+                        Toast.makeText(Transaction.this, "Insufficient payment", Toast.LENGTH_LONG).show();
+
+
+                    else {
+                        intent = new Intent(Transaction.this, FinalizeActivity.class);
+                        intent.putExtra("TOTAL", total_raw);
+                        intent.putExtra("PAY", pay_raw);
+                        intent.putExtra("CHANGE", change);
+                        intent.putExtra("CHECKOUTS", checkOut);
+
+                        startActivity(intent);
+                    }
                 }
             }
         });

@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_marginTop="30dp">
 
         <Spinner
             android:id="@+id/spinner1"
@@ -25,7 +26,8 @@
         <EditText
             android:id="@+id/qty"
             android:layout_width="68dp"
-            android:layout_height="23dp"
+            android:layout_height="wrap_content"
+
             android:ems="10"
             android:hint="QTY"
             android:inputType="number" />
@@ -88,7 +90,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/item_list"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="400dp"
         >
 
     </androidx.recyclerview.widget.RecyclerView>

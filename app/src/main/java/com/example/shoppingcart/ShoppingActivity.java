@@ -70,25 +70,30 @@ public class ShoppingActivity extends AppCompatActivity implements Serializable 
         double total = 0, itemPrice = 0;
         String pref_quan = quantity.getText().toString();
 
-        if(pref_quan.isEmpty())
+        if(pref_quan.isEmpty()) {
             pref_quan = "0";
+            Toast.makeText(ShoppingActivity.this, "Invalid value", Toast.LENGTH_LONG).show();
+        }
 
-        int count = Integer.parseInt(pref_quan);
+        else {
 
-        buy.add(new Order(item.get(pos).getName(), item.get(pos).getPrice(), count));
+            int count = Integer.parseInt(pref_quan);
 
-        for(int i = 0; i < buy.size(); i++)
-            itemPrice += buy.get(i).item.price * buy.get(i).quantity;
+            buy.add(new Order(item.get(pos).getName(), item.get(pos).getPrice(), count));
 
-        total = itemPrice;
+            for (int i = 0; i < buy.size(); i++)
+                itemPrice += buy.get(i).item.price * buy.get(i).quantity;
 
-        getIntent().putExtra("TOTAL", total);
-        totalPrice.setText(""+total);
+            total = itemPrice;
 
-        itemList = (RecyclerView) findViewById(R.id.item_list);
-        itemList.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new OrderAdapter(buy, this);
-        itemList.setAdapter(adapter);
+            getIntent().putExtra("TOTAL", total);
+            totalPrice.setText("" + total);
+
+            itemList = (RecyclerView) findViewById(R.id.item_list);
+            itemList.setLayoutManager(new LinearLayoutManager(this));
+            adapter = new OrderAdapter(buy, this);
+            itemList.setAdapter(adapter);
+        }
     }
 
     public void selectItem(){
